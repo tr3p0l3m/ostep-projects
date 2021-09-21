@@ -18,46 +18,52 @@ int main(int agrc, char *argv[])
     ssize_t line_size;
     line_size = getline(&line, &line_buf_size, fileopen);
     int len = strlen(line);
-    char *destination = (char*) malloc(sizeof(char) * (len * 2 + 1));
+    char *destination = (char *)malloc(sizeof(char) * (len * 2 + 1));
     char number[MAX_LEN];
     while (line_size > 0)
     {
         int i = 0;
-        int k; 
-        int j = k;
+        int k = 0;
+        int j = 0;
         int counter = 0;
 
-        for ( i = 0; i < len; i++)
+        for (i = 0; i < len; i++)
         {
             /* code */
-            while (i + 1 < len && line[i] == line[i+1])
+            counter = 1;
+
+            while (i + 1 < len && line[i] == line[i + 1])
             {
-                /* code */
-                counter ++;
+                counter++;
                 i++;
-
             }
+            // if (counter == 1)
+            // {
+            /* code */
+                sprintf(number, "%d", counter);
 
-            sprintf(number, "%d", counter);
+            //sprintf(number, "%d", counter);
+            //}
 
-            for (k = 0; *(number + k); k++, j++)
+            for (k = 0; *(number + k); k++)
             {
                 /* code */
-                if(k == 0){
-                    destination[j] = line[k];
-                } else {
-                destination[j] = number[k];
 
-                }
+                destination[j] = number[k];
+                j++;
+                //printf("%s\n",destination);
             }
-            
+
+            destination[j] = line[i];
+            j++;
         }
 
-        destination[j] = '\0';
+        //destination[j] = '\0';
 
-        fwrite(destination, line_buf_size, sizeof(destination), fileopen);
-        
-        line_size = getline(&line, &line_buf_size, fileopen);
+        printf("%s\n", destination);
+
+        //fwrite(destination, line_buf_size, sizeof(destination), fileopen);
+        return line_size;
     }
 
     return 0;
