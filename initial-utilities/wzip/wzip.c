@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
 #define MAX_LEN 50
 
-int main(int agrc, char *argv[])
+int main(int argc, char *argv[])
 {
     FILE *fileopen = fopen(argv[1], "r");
     if (fileopen == NULL)
@@ -40,7 +41,20 @@ int main(int agrc, char *argv[])
             // if (counter == 1)
             // {
             /* code */
-                sprintf(number, "%d", counter);
+
+            // int converter = CHAR_BIT * sizeof counter; /* however many bits are in an integer */
+            // while(converter--) {
+            //     putchar('0' + ((counter >> i) & 1)); 
+            // }
+            int binary = 0, mod, temp=1;
+            while(counter != 0){
+                mod = counter % 2;
+                binary = binary+mod*temp;
+                temp = temp * 10;
+                counter = counter / 2;
+            }
+            
+            sprintf(number, "%d", binary);
 
             //sprintf(number, "%d", counter);
             //}
@@ -53,16 +67,18 @@ int main(int agrc, char *argv[])
                 j++;
                 //printf("%s\n",destination);
             }
-
+            // if (counter == 1){
+            //     j--;
+            // }
             destination[j] = line[i];
             j++;
         }
 
         //destination[j] = '\0';
 
-        printf("%s\n", destination);
+        //printf("%s\n", destination);
 
-        //fwrite(destination, line_buf_size, sizeof(destination), fileopen);
+        fwrite(destination, line_buf_size, sizeof(destination), fileopen);
         return line_size;
     }
 
